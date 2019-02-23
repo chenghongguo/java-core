@@ -31,6 +31,7 @@ public class StreamTest {
         );
     }
 
+    // 分组
     @Test
     public void test13() {
         ConcurrentMap<Status, List<Employee>> collect2 = employees.stream().collect(Collectors.groupingByConcurrent(Employee::getStatus));
