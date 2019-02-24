@@ -1,13 +1,12 @@
 package com.hongguo.java8.date;
 
+import com.hongguo.java8.utils.DateUtils;
 import org.junit.Test;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.chrono.Era;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author hongguo_cheng
@@ -15,6 +14,42 @@ import java.time.format.DateTimeFormatter;
  * @description
  */
 public class LocalDateTest {
+
+    @Test
+    public void test7() {
+        LocalDate localDate = LocalDate.now();
+        LocalTime localTime = LocalTime.now();
+        System.out.println(DateUtils.convertLocalTimeToDate(localDate, localTime));
+    }
+
+    /**
+     * LocalDate 转 Date
+     */
+    @Test
+    public void test6() {
+        LocalDate localDate = LocalDate.now();
+        System.out.println(DateUtils.convertLocalDateToDate(localDate));
+    }
+
+    /**
+     * LocalDateTime 转 Date
+     */
+    @Test
+    public void test5() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println(DateUtils.convertLocalDateTimeToDate(localDateTime));
+    }
+
+    /**
+     * Date转LocalDateTime
+     */
+    @Test
+    public void test4() {
+        Date date = new Date();
+        System.out.println(DateUtils.convertToLocalDateTime(date));
+        System.out.println(DateUtils.convertToLocalDate(date));
+        System.out.println(DateUtils.convertToLocalTime(date));
+    }
 
     /**
      * LocalDate 创建
