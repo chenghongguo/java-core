@@ -1,6 +1,7 @@
 package com.hongguo.java8.utils;
 
 import java.time.*;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -9,6 +10,52 @@ import java.util.Date;
  * @description
  */
 public class DateUtils {
+
+    /**
+     * 获取date当天的最后时间
+     *
+     * @param date
+     * @return
+     */
+    public static Date getEndTimeOfDay(Date date) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return Date.from(LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 获取date当天的开始日期
+     *
+     * @param date
+     * @return
+     */
+    public static Date getFirstTimeOfDay(Date date) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return Date.from(LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MIN).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 获取date所属月份第一天
+     *
+     * @param date
+     * @return
+     */
+    public static Date getFirstDayOfMonth(Date date) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime zonedDateTime = LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MIN).with(TemporalAdjusters.firstDayOfMonth()).atZone(ZoneId.systemDefault());
+        return Date.from(zonedDateTime.toInstant());
+    }
+
+    /**
+     * 获取date所属月份最后一天
+     *
+     * @param date
+     * @return
+     */
+    public static Date getEndDayOfMonth(Date date) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime zonedDateTime = LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MAX).with(TemporalAdjusters.lastDayOfMonth()).atZone(ZoneId.systemDefault());
+        return Date.from(zonedDateTime.toInstant());
+    }
 
     /**
      * LocalDateTime 转 Date
