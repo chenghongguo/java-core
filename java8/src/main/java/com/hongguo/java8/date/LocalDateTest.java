@@ -16,6 +16,13 @@ import java.util.Date;
 public class LocalDateTest {
 
     @Test
+    public void test8() {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now().plusDays(3);
+        System.out.println(endDate.isAfter(startDate));
+    }
+
+    @Test
     public void test7() {
         LocalDate localDate = LocalDate.now();
         LocalTime localTime = LocalTime.now();

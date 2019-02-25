@@ -36,9 +36,12 @@ public class InstantTest {
         System.out.println("Today: " + today);
         LocalDate birthday = LocalDate.of(1989, Month.JANUARY, 3);
         System.out.println("Birthday:" + birthday);
-        Period period = Period.between(birthday, today);
+        Period period = Period.between(today, birthday);
         System.out.println(period.getYears() + ", "
                 + period.getMonths() + ", " + period.getDays());
+        System.out.println(period.isNegative());
+        Period period1 = Period.between(LocalDate.now(), LocalDate.now());
+        System.out.println(period1.isNegative());
     }
 
     @Test
@@ -60,5 +63,13 @@ public class InstantTest {
         System.out.println("结束时间 : " + endDate);
         long daysDiff = ChronoUnit.DAYS.between(startDate, endDate);
         System.out.println("两天之间的差在天数   : " + daysDiff);
+    }
+
+    @Test
+    public void test6() {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now();
+        Period period = Period.between(endDate, startDate);
+        System.out.println(period.isNegative());
     }
 }
