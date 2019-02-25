@@ -17,8 +17,8 @@ public class LocalDateTest {
 
     @Test
     public void test8() {
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = LocalDate.now().plusDays(3);
+        LocalDate startDate = LocalDate.of(2019, Month.MARCH, 2);
+        LocalDate endDate = LocalDate.now().plusDays(4);
         System.out.println(endDate.isAfter(startDate));
     }
 
