@@ -18,7 +18,7 @@ import java.nio.file.StandardOpenOption;
  * |- ServerSocketChannel
  * |- DatagramChannel
  */
-public class ChannelTest {
+public class FileChannelTest {
 
     /**
      * 文件读取 - RandomAccessFile
