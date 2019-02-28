@@ -13,6 +13,7 @@
         <module>java-dynamic</module>
         <module>java8</module>
         <module>java-effective</module>
+        <module>java-nio</module>
     </modules>
 
     <name>java-core</name>
