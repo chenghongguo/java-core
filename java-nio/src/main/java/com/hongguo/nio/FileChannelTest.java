@@ -2,10 +2,8 @@ package com.hongguo.nio;
 
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -22,18 +20,32 @@ import java.nio.file.StandardOpenOption;
 public class FileChannelTest {
 
     @Test
-    public void test6() throws IOException {
-        long start = System.currentTimeMillis();
-        FileChannel inChannel = FileChannel.open(Paths.get("d:/1.avi"), StandardOpenOption.READ);
-        FileChannel outChannel = FileChannel.open(Paths.get("d:/2.avi"), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
-        MappedByteBuffer inBuffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size());
-        MappedByteBuffer outBuffer = outChannel.map(FileChannel.MapMode.READ_WRITE, 0, inChannel.size());
-        byte[] dst = new byte[inBuffer.limit()];
-        inBuffer.get(dst);
-        outBuffer.put(dst);
-        inChannel.close();
-        outChannel.close();
-        System.out.println(System.currentTimeMillis() - start);
+    public void test7() throws Exception {
+        FileOutputStream fileOutputStream = new FileOutputStream("NioText2.txt");
+        FileChannel fileChannel = fileOutputStream.getChannel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        buffer.put("Hello world, nio".getBytes());
+        buffer.flip();
+
+        fileChannel.write(buffer);
+
+        fileOutputStream.close();
+    }
+
+    @Test
+    public void test6() throws Exception {
+        InputStream inputStream = new FileInputStream("NioText.txt");
+        FileChannel fileChannel = ((FileInputStream) inputStream).getChannel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        fileChannel.read(buffer);
+
+        buffer.flip();
+
+        while (buffer.remaining() > 0) {
+            System.out.println((char) buffer.get());
+        }
+
+        inputStream.close();
     }
 
     /**
