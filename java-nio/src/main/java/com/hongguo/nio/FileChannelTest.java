@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -19,6 +20,21 @@ import java.nio.file.StandardOpenOption;
  * |- DatagramChannel
  */
 public class FileChannelTest {
+
+    @Test
+    public void test6() throws IOException {
+        long start = System.currentTimeMillis();
+        FileChannel inChannel = FileChannel.open(Paths.get("d:/1.avi"), StandardOpenOption.READ);
+        FileChannel outChannel = FileChannel.open(Paths.get("d:/2.avi"), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
+        MappedByteBuffer inBuffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size());
+        MappedByteBuffer outBuffer = outChannel.map(FileChannel.MapMode.READ_WRITE, 0, inChannel.size());
+        byte[] dst = new byte[inBuffer.limit()];
+        inBuffer.get(dst);
+        outBuffer.put(dst);
+        inChannel.close();
+        outChannel.close();
+        System.out.println(System.currentTimeMillis() - start);
+    }
 
     /**
      * 文件读取 - RandomAccessFile

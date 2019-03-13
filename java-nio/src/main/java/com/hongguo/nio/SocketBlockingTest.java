@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
  * @date: 2019-02-28
  * @description:
  */
-public class SocketTest {
+public class SocketBlockingTest {
 
     /**
      * 服务端
@@ -27,19 +27,16 @@ public class SocketTest {
     public void server() throws IOException {
         ServerSocketChannel server = ServerSocketChannel.open();
         server.bind(new InetSocketAddress(9090));
-        SocketChannel accept = server.accept();
-        FileChannel fileChannel = FileChannel.open(Paths.get("d:/2.txt"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+        FileChannel fileChannel = FileChannel.open(Paths.get("d:/3.txt"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+        SocketChannel socketChannel = server.accept();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        while (accept.read(buffer) != -1) {
+        while (socketChannel.read(buffer) != -1) {
             buffer.flip();
             fileChannel.write(buffer);
             buffer.clear();
         }
-
         fileChannel.close();
-        accept.close();
         server.close();
-
     }
 
     /**
