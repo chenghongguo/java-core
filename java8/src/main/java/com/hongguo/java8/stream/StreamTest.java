@@ -20,15 +20,21 @@ public class StreamTest {
     @Before
     public void init() {
         employees = Arrays.asList(
-                new Employee(1, "张三", 1, "研发部", 1000.00, Status.FREE),
-                new Employee(2, "李四", 2, "测试部", 2340.00, Status.VOCATION),
-                new Employee(3, "王五", 1, "研发部", 5670.00, Status.BUSY),
+                new Employee(1, "张三", 5, "研发部", 1000.00, Status.FREE),
+                new Employee(2, "李四", 7, "测试部", 2340.00, Status.VOCATION),
+                new Employee(3, "王五", 9, "研发部", 5670.00, Status.BUSY),
                 new Employee(4, "赵六", 2, "前端部", 7890.00, Status.BUSY),
                 new Employee(5, "田七", 1, "前端部", 3000.00, Status.FREE),
-                new Employee(6, "赵四", 2, "研发部", 4000.00, Status.BUSY),
-                new Employee(7, "刘能", 2, "研发部", 2000.00, Status.BUSY),
-                new Employee(7, "刘能", 2, "研发部", 2000.00, Status.BUSY)
+                new Employee(6, "赵四", 3, "研发部", 4000.00, Status.BUSY),
+                new Employee(7, "刘能", 4, "研发部", 2000.00, Status.BUSY),
+                new Employee(7, "刘能", 8, "研发部", 2000.00, Status.BUSY)
         );
+    }
+
+    @Test
+    public void test14() {
+        employees.stream().sorted(Comparator.comparingInt(Employee::getGender)).collect(Collectors.toList())
+                .forEach(employee -> System.out.println(employee));
     }
 
     // 分组
