@@ -31,6 +31,12 @@ public class StreamTest {
         );
     }
 
+    @Test
+    public void test14() {
+        employees.sort(Comparator.comparing(Employee::getSalary));
+        employees.forEach(employee -> System.out.println(employee));
+    }
+
     // 分组
     @Test
     public void test13() {
