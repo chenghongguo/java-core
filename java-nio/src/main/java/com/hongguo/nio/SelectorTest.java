@@ -53,16 +53,13 @@ public class SelectorTest {
                 } else if (selectionKey.isReadable()) {
                     SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
                     int bytesRead = 0;
-                    while (true) {
-                        ByteBuffer buffer = ByteBuffer.allocate(1024);
-                        buffer.clear();
-                        int read = socketChannel.read(buffer);
-                        if (read <= 0) {
-                            break;
-                        }
+                    ByteBuffer buffer = ByteBuffer.allocate(1024);
+                    int read = 0;
+                    while ((read = socketChannel.read(buffer)) > 0) {
                         buffer.flip();
                         socketChannel.write(buffer);
                         bytesRead += read;
+                        buffer.clear();
                     }
                     System.out.println("读取: " + bytesRead + ", 来自于: " + socketChannel);
                     iterator.remove();
