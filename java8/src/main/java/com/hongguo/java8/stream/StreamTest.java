@@ -32,9 +32,15 @@ public class StreamTest {
     }
 
     @Test
-    public void test14() {
+    public void test15() {
         employees.stream().sorted(Comparator.comparingInt(Employee::getGender)).collect(Collectors.toList())
                 .forEach(employee -> System.out.println(employee));
+    }
+
+    @Test
+    public void test14() {
+        employees.sort(Comparator.comparing(Employee::getSalary));
+        employees.forEach(employee -> System.out.println(employee));
     }
 
     // 分组
