@@ -35,6 +35,8 @@ public class StreamTest {
     public void test15() {
         employees.stream().sorted(Comparator.comparingInt(Employee::getGender)).collect(Collectors.toList())
                 .forEach(employee -> System.out.println(employee));
+        employees.sort(Comparator.comparing(Employee::getSalary));
+        employees.forEach(employee -> System.out.println(employee));
     }
 
     @Test
