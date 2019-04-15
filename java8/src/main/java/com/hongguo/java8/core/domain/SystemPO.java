@@ -1,5 +1,6 @@
 package com.hongguo.java8.core.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date 2018年12月29日14:30:52
  */
 @Data
+@Builder
 public class SystemPO implements Serializable {
 
     private static final long serialVersionUID = -2476872872825493300L;

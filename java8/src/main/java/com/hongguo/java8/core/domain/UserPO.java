@@ -1,5 +1,6 @@
 package com.hongguo.java8.core.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @author chenghongugo
  */
 @Data
+@Builder
 public class UserPO implements Serializable {
 
     private static final long serialVersionUID = 8807130932761442232L;
