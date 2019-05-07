@@ -1,5 +1,6 @@
 package com.hongguo.java8.stream;
 
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,19 +17,131 @@ import java.util.stream.Stream;
 public class StreamTest {
 
     private List<Employee> employees;
+    private List<Employee> employees2;
 
     @Before
     public void init() {
-        employees = Arrays.asList(
-                new Employee(1, "张三", 5, "研发部", 1000.00, Status.FREE),
-                new Employee(2, "李四", 7, "测试部", 2340.00, Status.VOCATION),
-                new Employee(3, "王五", 9, "研发部", 5670.00, Status.BUSY),
-                new Employee(4, "赵六", 2, "前端部", 7890.00, Status.BUSY),
-                new Employee(5, "田七", 1, "前端部", 3000.00, Status.FREE),
-                new Employee(6, "赵四", 3, "研发部", 4000.00, Status.BUSY),
-                new Employee(7, "刘能", 4, "研发部", 2000.00, Status.BUSY),
-                new Employee(7, "刘能", 8, "研发部", 2000.00, Status.BUSY)
+        employees = new ArrayList<>();
+        employees.add(new Employee(1, "张三", 5, "研发部", 1000.00, Status.FREE));
+        employees.add(new Employee(2, "李四", 7, "测试部", 2340.00, Status.VOCATION));
+        employees.add(new Employee(3, "王五", 9, "研发部", 5670.00, Status.BUSY));
+        employees.add(new Employee(4, "赵六", 2, "前端部", 7890.00, Status.BUSY));
+        employees.add(new Employee(5, "田七", 1, "前端部", 3000.00, Status.FREE));
+        employees.add(new Employee(6, "赵四", 3, "研发部", 4000.00, Status.BUSY));
+        employees.add(new Employee(7, "刘能", 4, "研发部", 2000.00, Status.BUSY));
+
+        employees2 = Arrays.asList(
+                new Employee(1, "张三2", 5, "研发部", 1000.00, Status.FREE),
+                new Employee(2, "李四2", 7, "测试部", 2340.00, Status.VOCATION),
+                new Employee(3, "王五2", 9, "研发部", 5670.00, Status.BUSY),
+                new Employee(4, "赵六2", 2, "前端部", 7890.00, Status.BUSY),
+                new Employee(5, "田七2", 1, "前端部", 3000.00, Status.FREE)
         );
+    }
+
+    @Test
+    public void test23() {
+        employees2.forEach(employee -> {
+            employee.setGender(300);
+        });
+
+        employees2.forEach(System.out::println);
+    }
+
+    @Test
+    public void test22() {
+        String s = JSONObject.toJSONString("");
+        System.out.println(s);
+        s = JSONObject.toJSONString(null);
+        System.out.println(s);
+    }
+
+    @Test
+    public void test21() {
+        employees.removeIf(employee -> {
+            if (employee.getId() > 2) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+        System.out.println(employees);
+    }
+
+    @Test
+    public void test20() {
+        employees.stream().filter(employee -> employees2.stream().noneMatch(employee1 -> employee1.getId().equals(employee.getId()))).forEach(System.out::println);
+    }
+
+    @Test
+    public void test19() {
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+        list1.add(3);
+
+        List<Integer> all = null;
+        List<Integer> collect = Optional.ofNullable(all).orElse(new ArrayList<>()).stream().collect(Collectors.toList());
+        list1.addAll(collect);
+        System.out.println(list1);
+    }
+
+    @Test
+    public void test18() {
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+        list1.add(3);
+
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(3);
+        list2.add(4);
+        list2.add(5);
+
+        System.out.println("====求交集===");
+        List<Integer> list = list1.stream().filter(t -> list2.contains(t)).collect(Collectors.toList());
+        list.stream().forEach(System.out::println);
+
+
+        System.out.println("====求差集===");
+        list = list1.stream().filter(t -> !list2.contains(t)).collect(Collectors.toList());
+        list.stream().forEach(System.out::println);
+
+
+        System.out.println("====求并集===");
+        list.addAll(list1);
+        list.addAll(list2);
+        list = list.stream().distinct().collect(Collectors.toList());
+        list.stream().forEach(System.out::println);
+    }
+
+    @Test
+    public void test17() {
+        List<String> list = Arrays.asList("[1-2]", "[2-3]");
+        System.out.println(list);
+    }
+
+    @Test
+    public void test16() {
+        List<Employee> list = new ArrayList<>();
+        for (Employee employee : employees) {
+            for (int i = 0; i < 3; i++) {
+                employee.setGender(i);
+                Employee bean = toBean(employee, Employee.class);
+                System.out.println(JSONObject.toJSONString(bean) + ", " + JSONObject.toJSONString(employee));
+                list.add(bean);
+            }
+        }
+
+        System.out.println("===================");
+        System.out.println(list.size());
+        System.out.println("===================");
+        list.forEach(System.out::println);
+    }
+
+    public static <T> T toBean(Object source, Class<T> target) {
+        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(source);
+        return JSONObject.parseObject(jsonObject.toJSONString(), target);
     }
 
     @Test
