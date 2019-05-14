@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -37,6 +38,42 @@ public class StreamTest {
                 new Employee(4, "赵六2", 2, "前端部", 7890.00, Status.BUSY),
                 new Employee(5, "田七2", 1, "前端部", 3000.00, Status.FREE)
         );
+    }
+
+    @Test
+    public void test28 () {
+        String[] array = new String[]{"hello", "world", "hello world"};
+        Stream<String> stream = Stream.of(array);
+        stream.forEach(System.out::println);
+        System.out.println("------------");
+
+        Stream<String> stringStream = Arrays.stream(array);
+        stringStream.forEach(System.out::println);
+    }
+
+    @Test
+    public void test27() {
+        Stream.iterate(1, item -> item * 2).limit(10).forEach(System.out::println);
+    }
+
+    @Test
+    public void test26() {
+        Stream<String> generate = Stream.generate(String::new).limit(10);
+        generate.forEach(System.out::println);
+    }
+
+    @Test
+    public void test25() {
+        Stream<List<Integer>> listStream = Stream.of(Arrays.asList(1), Arrays.asList(2, 3), Arrays.asList(4, 5, 6));
+        Integer count = listStream.flatMap(list -> list.stream()).map(item -> item * 2).reduce(0, Integer::sum);
+        System.out.println(count);
+    }
+
+    @Test
+    public void test24() {
+        Stream<Integer> stream = Stream.of(1, 2, 3);
+        LongStream longStream = stream.mapToLong(Integer::longValue);
+        longStream.forEach(System.out::println);
     }
 
     @Test
