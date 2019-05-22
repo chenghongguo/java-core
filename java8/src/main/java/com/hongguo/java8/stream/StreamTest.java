@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
@@ -36,12 +38,96 @@ public class StreamTest {
                 new Employee(2, "李四2", 7, "测试部", 2340.00, Status.VOCATION),
                 new Employee(3, "王五2", 9, "研发部", 5670.00, Status.BUSY),
                 new Employee(4, "赵六2", 2, "前端部", 7890.00, Status.BUSY),
-                new Employee(5, "田七2", 1, "前端部", 3000.00, Status.FREE)
+                new Employee(5, "田七2", 1, "前端部", 3000.00, Status.BUSY)
         );
     }
 
     @Test
-    public void test28 () {
+    public void test41() {
+        String collect = employees.stream().map(Employee::getName).collect(Collectors.joining(",", "[", "]"));
+        System.out.println(collect);
+    }
+
+    @Test
+    public void test40() {
+        Double sum = employees.stream().collect(Collectors.summingDouble(e -> e.getSalary()));
+        System.out.println(sum);
+    }
+
+    @Test
+    public void test39() {
+        Map<Boolean, Long> map = employees.stream().collect(Collectors.partitioningBy(e -> e.getSalary() > 4000, Collectors.counting()));
+        map.forEach((k, v) -> System.out.println(k + ", " + v));
+    }
+
+    @Test
+    public void test38() {
+        Map<Status, Double> map = employees.stream().collect(Collectors.groupingBy(Employee::getStatus, Collectors.summingDouble(Employee::getSalary)));
+        map.forEach((k, v) -> System.out.println(k + ", " + v));
+    }
+
+    @Test
+    public void test37() {
+        Map<String, Double> map = employees.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.summingDouble(Employee::getSalary)));
+        map.forEach((k, v) -> System.out.println(k + ", " + v));
+    }
+
+    @Test
+    public void test36() {
+        Double sum = employees.stream().collect(Collectors.summingDouble(Employee::getSalary));
+        System.out.println(sum);
+    }
+
+    @Test
+    public void test35() {
+        long start = System.currentTimeMillis();
+        Map<String, List<String>> listMap = employees.parallelStream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.mapping(Employee::getName, Collectors.toList())));
+        listMap.forEach((k, v) -> System.out.println(k + ", " + v));
+        System.out.println(System.currentTimeMillis() - start);
+    }
+
+    @Test
+    public void test34() {
+        long start = System.currentTimeMillis();
+        Map<String, List<String>> listMap = employees.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.mapping(Employee::getName, Collectors.toList())));
+        listMap.forEach((k, v) -> System.out.println(k + ", " + v));
+        System.out.println(System.currentTimeMillis() - start);
+    }
+
+    @Test
+    public void test33() {
+        Map<String, Long> collect = employees.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()));
+        collect.forEach((k, v) -> System.out.println(k + ", " + v));
+    }
+
+    @Test
+    public void test32() {
+        String collect = employees2.stream().map(Employee::getName).collect(Collectors.joining(",", "[", "]"));
+        System.out.println(collect);
+    }
+
+    @Test
+    public void test31() {
+        employees2.stream().collect(Collectors.groupingBy(Employee::getStatus)).forEach((k, v) -> System.out.println(k + ", " + v));
+    }
+
+    @Test
+    public void test30() {
+        Map<Boolean, List<Employee>> listMap = employees.stream().collect(Collectors.partitioningBy(Employee::isDev));
+        List<Employee> employees = listMap.get(Boolean.TRUE);
+        System.out.println(employees);
+    }
+
+    @Test
+    public void test29() {
+        LocalDate startDate = LocalDate.of(2019, Month.MAY, 19);
+        LocalDate forbidPeriodDate = LocalDate.now().plusDays(4);
+        boolean after = forbidPeriodDate.isAfter(startDate);
+        System.out.println(after);
+    }
+
+    @Test
+    public void test28() {
         String[] array = new String[]{"hello", "world", "hello world"};
         Stream<String> stream = Stream.of(array);
         stream.forEach(System.out::println);

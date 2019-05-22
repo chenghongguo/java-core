@@ -17,4 +17,8 @@ public class Employee {
     private String deptName;
     private Double salary;
     private Status status;
+
+    public boolean isDev() {
+        return "研发部".equals(this.deptName);
+    }
 }
