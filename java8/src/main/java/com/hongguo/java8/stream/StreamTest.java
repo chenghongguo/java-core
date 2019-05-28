@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -40,6 +42,36 @@ public class StreamTest {
                 new Employee(4, "赵六2", 2, "前端部", 7890.00, Status.BUSY),
                 new Employee(5, "田七2", 1, "前端部", 3000.00, Status.BUSY)
         );
+    }
+
+    @Test
+    public void test45() {
+        Map<String, Optional<Employee>> collect = employees.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.reducing(BinaryOperator.maxBy(Comparator.comparingDouble(Employee::getSalary)))));
+        collect.forEach((k, v) -> System.out.println(k + ", " + v));
+    }
+
+    @Test
+    public void test44() {
+        Map<Boolean, List<Integer>> collect = IntStream.rangeClosed(2, 100).boxed().collect(Collectors.partitioningBy(candidate -> isPrime(candidate)));
+        System.out.println(collect.get(true));
+        System.out.println(collect.get(false));
+    }
+
+    private boolean isPrime(int candidate) {
+        return IntStream.range(2, candidate).noneMatch(i -> candidate % i == 0);
+    }
+
+    @Test
+    public void test43() {
+        int candidate = 100;
+        boolean b = IntStream.range(2, candidate).noneMatch(i -> candidate % i == 0);
+        System.out.println(b);
+    }
+
+    @Test
+    public void test42() {
+        List<String> list = Arrays.asList("hello", "world", "java", "python");
+        list.add("fds");
     }
 
     @Test
