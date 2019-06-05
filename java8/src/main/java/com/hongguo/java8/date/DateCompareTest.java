@@ -4,9 +4,13 @@ import com.hongguo.java8.utils.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -41,6 +45,19 @@ public class DateCompareTest {
                 .startTime(DateUtils.convertLocalDateTimeToDate(LocalDateTime.of(2019, Month.MAY, 24, 0, 0, 0)))
                 .endTime(DateUtils.convertLocalDateTimeToDate(LocalDateTime.of(2019, Month.MAY, 31, 23, 59, 59)))
                 .build());
+    }
+
+    @Test
+    public void test3() {
+        String message = String.format("查询区间[%s-%s]查询任务数据为空", format(new Date()), format(new Date()));
+        System.out.println(message);
+    }
+
+    private String format(Date date) {
+        if (date == null) {
+            return null;
+        }
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
 
     @Test

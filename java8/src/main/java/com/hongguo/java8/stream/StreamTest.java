@@ -192,6 +192,9 @@ public class StreamTest {
         Stream<Integer> stream = Stream.of(1, 2, 3);
         LongStream longStream = stream.mapToLong(Integer::longValue);
         longStream.forEach(System.out::println);
+        stream = Stream.of(1, 2, 3, 4);
+        int sum = stream.mapToInt(item -> item.intValue()).sum();
+        System.out.println(sum);
     }
 
     @Test
