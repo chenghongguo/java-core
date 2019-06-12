@@ -20,6 +20,8 @@ public class InstantTest {
         System.out.println(nano);
         long l = instant.toEpochMilli();
         System.out.println(l);
+        Instant instant1 = Instant.ofEpochSecond(3);
+        System.out.println(instant1);
     }
 
     @Test
@@ -36,7 +38,7 @@ public class InstantTest {
         System.out.println("Today: " + today);
         LocalDate birthday = LocalDate.of(1989, Month.JANUARY, 3);
         System.out.println("Birthday:" + birthday);
-        Period period = Period.between(today, birthday);
+        Period period = Period.between(birthday, today);
         System.out.println(period.getYears() + ", "
                 + period.getMonths() + ", " + period.getDays());
         System.out.println(period.isNegative());
@@ -71,5 +73,11 @@ public class InstantTest {
         LocalDate endDate = LocalDate.now();
         Period period = Period.between(endDate, startDate);
         System.out.println(period.isNegative());
+    }
+
+    @Test
+    public void test7() {
+        LocalDate localDate = LocalDate.now().plus(Long.MAX_VALUE, ChronoUnit.NANOS);
+        System.out.println(localDate);
     }
 }

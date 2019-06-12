@@ -3,8 +3,7 @@ package com.hongguo.java8.date;
 import com.hongguo.java8.utils.DateUtils;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Date;
 
 /**
@@ -13,6 +12,31 @@ import java.util.Date;
  * @description
  */
 public class LocalDateTimeTest {
+
+    @Test
+    public void test6() {
+        Date date = new Date();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        System.out.println(localDateTime);
+    }
+
+    @Test
+    public void test5() {
+        LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        System.out.println(of);
+
+        Date from = Date.from(of.atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(from);
+    }
+
+    @Test
+    public void test4() {
+        LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        System.out.println(of);
+
+        Date from = Date.from(of.atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(from);
+    }
 
     @Test
     public void test1() {

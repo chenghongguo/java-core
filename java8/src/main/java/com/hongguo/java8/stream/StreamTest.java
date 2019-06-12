@@ -9,6 +9,7 @@ import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -42,6 +43,15 @@ public class StreamTest {
                 new Employee(4, "赵六2", 2, "前端部", 7890.00, Status.BUSY),
                 new Employee(5, "田七2", 1, "前端部", 3000.00, Status.BUSY)
         );
+    }
+
+    @Test
+    public void test46() {
+        List<String> list = Arrays.asList("hello", "world", "hello world", "test");
+        list.stream().map(item -> item.toUpperCase()).forEach(System.out::println);
+
+        Consumer consumer = (msg) -> System.out.println("test");
+        consumer.accept("hello");
     }
 
     @Test

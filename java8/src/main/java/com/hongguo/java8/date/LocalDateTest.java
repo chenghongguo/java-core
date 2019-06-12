@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.time.*;
 import java.time.chrono.Era;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -14,6 +15,41 @@ import java.util.Date;
  * @description
  */
 public class LocalDateTest {
+
+    @Test
+    public void test11() {
+        LocalDate localDate = LocalDate.now();
+        String basicIsoDate = localDate.format(DateTimeFormatter.BASIC_ISO_DATE);
+        System.out.println(basicIsoDate);
+        String isoLocalDate = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        System.out.println(isoLocalDate);
+        String isoDate = localDate.format(DateTimeFormatter.ISO_DATE);
+        System.out.println(isoDate);
+        String isoDateTime = localDate.format(DateTimeFormatter.ISO_DATE_TIME);
+        System.out.println(isoDateTime);
+    }
+
+    @Test
+    public void test10() {
+        LocalDateTime localDateTime = LocalDateTime.now().plusDays(4);
+        Date from = Date.from(LocalDateTime.of(localDateTime.toLocalDate(), LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(from);
+    }
+
+    @Test
+    public void test9() {
+        LocalDate date = LocalDate.of(2014, 3, 18);
+        // 当月第一天
+        LocalDate firstDayOfMonth = date.with(TemporalAdjusters.firstDayOfMonth());
+        System.out.println("firstDayOfMonth = " + firstDayOfMonth);
+        // 当月最后一天
+        LocalDate lastDayOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
+        System.out.println("lastDayOfMonth = " + lastDayOfMonth);
+
+        // 下个月第一天
+        LocalDate firstDayOfNextMonth = date.with(TemporalAdjusters.firstDayOfNextMonth());
+        System.out.println("firstDayOfNextMonth = " + firstDayOfNextMonth);
+    }
 
     @Test
     public void test8() {
@@ -29,9 +65,6 @@ public class LocalDateTest {
         System.out.println(DateUtils.convertLocalTimeToDate(localDate, localTime));
     }
 
-    /**
-     * LocalDate 转 Date
-     */
     @Test
     public void test6() {
         LocalDate localDate = LocalDate.now();
@@ -110,15 +143,21 @@ public class LocalDateTest {
     @Test
     public void test3() {
         LocalDate localDate = LocalDate.now();
+        System.out.println(localDate);
         LocalDate minus = localDate.minusDays(5);
         System.out.println(minus);
-        LocalDate localDate1 = localDate.plusDays(4);
-        System.out.println(localDate1);
+        LocalDate plus = localDate.plusDays(4);
+        System.out.println(plus);
 
         LocalDate localDate2 = localDate.withDayOfMonth(12);
         System.out.println(localDate2);
 
         LocalDate localDate3 = localDate.withMonth(12);
         System.out.println(localDate3);
+
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        LocalDateTime with = now.with(TemporalAdjusters.firstDayOfMonth());
+        System.out.println(with);
     }
 }
