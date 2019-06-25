@@ -22,7 +22,7 @@ public class MaterialTest {
     public void test1() {
         List<MaterialDTO> list = createList();
         Date date = new Date();
-//        list.removeIf(materialDTO -> materialDTO.getStartTime().after(date) || materialDTO.getEndTime().before(date));
+//        list.removeIf(materialDTO -> materialDTO.getStartDate().after(date) || materialDTO.getEndDate().before(date));
 //        list.forEach(dto -> {
 //            System.out.println(dto);
 //        });
