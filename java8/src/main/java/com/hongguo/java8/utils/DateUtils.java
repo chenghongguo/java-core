@@ -1,8 +1,12 @@
 package com.hongguo.java8.utils;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author hongguo_cheng
@@ -125,5 +129,30 @@ public class DateUtils {
      */
     public static LocalTime convertToLocalTime(Date date) {
         return convertToLocalDateTime(date).toLocalTime();
+    }
+
+    /**
+     * 获取两个日期之间所有日期集合
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static List<LocalDate> getDatesBetween(Date startDate, Date endDate) {
+        LocalDate localStartDate = convertToLocalDate(startDate);
+        LocalDate localEndDate = convertToLocalDate(endDate);
+        long numOfDaysBetween = ChronoUnit.DAYS.between(localStartDate, localEndDate) + 1;
+        return IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(i -> localStartDate.plusDays(i)).collect(Collectors.toList());
+    }
+
+    /**
+     * date加上days后的日期
+     *
+     * @param date
+     * @return date加上days后的日期
+     */
+    public static Date plusDays(Date date, int days) {
+        LocalDate localDate = convertToLocalDate(date);
+        return convertLocalDateToDate(localDate.plusDays(days));
     }
 }

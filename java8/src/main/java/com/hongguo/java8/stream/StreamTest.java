@@ -46,6 +46,41 @@ public class StreamTest {
     }
 
     @Test
+    public void test49() {
+        // 比较集合的forEach与stream的forEach：操作结果一致，但是集合的forEach执行效率较高
+        employees.forEach(e -> {
+            e.setSalary(1000.00);
+            System.out.println(e);
+        });
+        System.out.println("-----1---------");
+        System.out.println(employees);
+        System.out.println("------1--------");
+        employees2.stream().forEach(e -> {
+            e.setSalary(2000.00);
+            System.out.println(e);
+        });
+        System.out.println("------2--------");
+        System.out.println(employees2);
+        System.out.println("------2--------");
+    }
+
+    @Test
+    public void test48() {
+        Consumer<String> consumer = msg -> System.out.println(msg);
+
+        consumer.accept("hongguo");
+    }
+
+    @Test
+    public void test47() {
+        Stream.of("one", "two", "three", "four").filter(e -> e.length() > 4).peek(e -> {
+            String age = e + "_abc";
+            System.out.println(age);
+        })
+                .map(String::toUpperCase).peek(e -> System.out.println("Map value: " + e)).collect(Collectors.toList());
+    }
+
+    @Test
     public void test46() {
         List<String> list = Arrays.asList("hello", "world", "hello world", "test");
         list.stream().map(item -> item.toUpperCase()).forEach(System.out::println);
@@ -81,7 +116,7 @@ public class StreamTest {
     @Test
     public void test42() {
         List<String> list = Arrays.asList("hello", "world", "java", "python");
-        list.add("fds");
+        list.stream().filter(item -> item.length() > 4).map(item -> item.toUpperCase()).forEach(System.out::println);
     }
 
     @Test
