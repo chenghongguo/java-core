@@ -21,16 +21,44 @@ public class DateTest {
     @Test
     public void test1() throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        DateObject open = new DateObject(format.parse("2019-07-01"), format.parse("2019-07-31"));
+        // 开放提报时间区间
+        DateObject open = new DateObject(format.parse("2019-06-26"), format.parse("2019-06-26"));
 
-        // 时间区间合并
+        // 广告位时间区间列表合并
         List<DateObject> merge = merge(init());
-        System.out.println("时间区间合并：" + JSONObject.toJSONStringWithDateFormat(merge, "yyyy-MM-dd HH:mm:ss"));
+        System.out.println("广告位时间区间列表合并：" + JSONObject.toJSONStringWithDateFormat(merge, "yyyy-MM-dd HH:mm:ss"));
         // 求交集
-        List<DateObject> result = intersection(open, merge);
+        List<DateObject> intersection = intersection(open, merge);
+        System.out.println("开放提报时间区间与广告位时间区间列表求交集：" + JSONObject.toJSONStringWithDateFormat(intersection, "yyyy-MM-dd HH:mm:ss"));
         // 求差集
-        List<DateObject> list = differences(open, result);
+        if (intersection.isEmpty()) {
+            System.out.println("该区间不可再选：" + JSONObject.toJSONStringWithDateFormat(open, "yyyy-MM-dd HH:mm:ss"));
+            return;
+        }
+        List<DateObject> list = differences(open, intersection);
         System.out.println("最终可选择的时间区间：" + JSONObject.toJSONStringWithDateFormat(list, "yyyy-MM-dd HH:mm:ss"));
+    }
+
+    /**
+     * 初始化DateObject集合对象
+     * 已提交素材时间区间
+     *
+     * @return
+     * @throws Exception
+     */
+    private List<DateObject> init() throws Exception {
+        List<DateObject> list = Lists.newArrayList();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        list.add(new DateObject(format.parse("2019-06-10"), format.parse("2019-06-17")));
+//        list.add(new DateObject(format.parse("2019-06-23"), format.parse("2019-06-28")));
+//        list.add(new DateObject(format.parse("2019-06-19"), format.parse("2019-06-20")));
+//        list.add(new DateObject(format.parse("2019-07-01"), format.parse("2019-07-10")));
+//        list.add(new DateObject(format.parse("2019-07-15"), format.parse("2019-07-20")));
+//        list.add(new DateObject(format.parse("2019-07-22"), format.parse("2019-07-25")));
+        list.add(new DateObject(format.parse("2019-06-26"), format.parse("2019-06-26")));
+//        list.add(new DateObject(format.parse("2019-06-27"), format.parse("2019-06-27")));
+        list.sort(Comparator.comparing(DateObject::getStartDate));
+        return list;
     }
 
     /**
@@ -123,25 +151,6 @@ public class DateTest {
         }
         result.add(first);
         return result;
-    }
-
-    /**
-     * 初始化DateObject集合对象
-     *
-     * @return
-     * @throws Exception
-     */
-    private List<DateObject> init() throws Exception {
-        List<DateObject> list = Lists.newArrayList();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//        list.add(new DateObject(format.parse("2019-06-10"), format.parse("2019-06-17")));
-//        list.add(new DateObject(format.parse("2019-06-23"), format.parse("2019-06-28")));
-//        list.add(new DateObject(format.parse("2019-06-19"), format.parse("2019-06-20")));
-        list.add(new DateObject(format.parse("2019-07-01"), format.parse("2019-07-10")));
-        list.add(new DateObject(format.parse("2019-07-15"), format.parse("2019-07-20")));
-        list.add(new DateObject(format.parse("2019-07-22"), format.parse("2019-07-25")));
-        list.sort(Comparator.comparing(DateObject::getStartDate));
-        return list;
     }
 
     /**
