@@ -17,6 +17,17 @@ import java.util.Date;
 public class LocalDateTest {
 
     @Test
+    public void test13() {
+        System.out.println(getClass().getSimpleName());
+    }
+
+    @Test
+    public void test12() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        System.out.println(LocalDateTime.now().format(formatter));
+    }
+
+    @Test
     public void test11() {
         LocalDate localDate = LocalDate.now();
         String basicIsoDate = localDate.format(DateTimeFormatter.BASIC_ISO_DATE);

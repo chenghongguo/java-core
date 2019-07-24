@@ -20,9 +20,9 @@ public class DateTest {
 
     @Test
     public void test1() throws Exception {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // 开放提报时间区间
-        DateObject open = new DateObject(format.parse("2019-06-26"), format.parse("2019-06-26"));
+        DateObject open = new DateObject(format.parse("2019-07-22 00:00:00"), format.parse("2019-08-31 23:59:59"));
 
         // 广告位时间区间列表合并
         List<DateObject> merge = merge(init());
@@ -48,14 +48,14 @@ public class DateTest {
      */
     private List<DateObject> init() throws Exception {
         List<DateObject> list = Lists.newArrayList();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//        list.add(new DateObject(format.parse("2019-06-10"), format.parse("2019-06-17")));
-//        list.add(new DateObject(format.parse("2019-06-23"), format.parse("2019-06-28")));
-//        list.add(new DateObject(format.parse("2019-06-19"), format.parse("2019-06-20")));
-//        list.add(new DateObject(format.parse("2019-07-01"), format.parse("2019-07-10")));
-//        list.add(new DateObject(format.parse("2019-07-15"), format.parse("2019-07-20")));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        list.add(new DateObject(format.parse("2019-07-22 00:00:00"), format.parse("2019-07-23 23:59:59")));
+        list.add(new DateObject(format.parse("2019-07-24 00:00:00"), format.parse("2019-07-24 23:59:59")));
+        list.add(new DateObject(format.parse("2019-07-25 00:00:00"), format.parse("2019-07-31 23:59:59")));
+        list.add(new DateObject(format.parse("2019-08-01 00:00:00"), format.parse("2019-08-07 23:59:59")));
+        list.add(new DateObject(format.parse("2019-08-15 00:00:00"), format.parse("2019-08-20 23:59:59")));
 //        list.add(new DateObject(format.parse("2019-07-22"), format.parse("2019-07-25")));
-        list.add(new DateObject(format.parse("2019-06-26"), format.parse("2019-06-26")));
+       // list.add(new DateObject(format.parse("2019-06-26"), format.parse("2019-06-26")));
 //        list.add(new DateObject(format.parse("2019-06-27"), format.parse("2019-06-27")));
         list.sort(Comparator.comparing(DateObject::getStartDate));
         return list;
@@ -140,8 +140,8 @@ public class DateTest {
         for (int i = 1; i < list.size(); i++) {
             DateObject next = list.get(i);
             // 合并区间
-            if (next.getStartDate().getTime() >= first.getStartDate().getTime()
-                    && next.getStartDate().getTime() <= first.getEndDate().getTime()) {
+            if (next.getStartDate().getTime() - first.getEndDate().getTime() == 1000) {
+                first.setStartDate(new Date(Math.min(first.getStartDate().getTime(), next.getStartDate().getTime())));
                 first.setEndDate(new Date(Math.max(first.getEndDate().getTime(), next.getEndDate().getTime())));
             } else {
                 // 没有交集，直接添加
