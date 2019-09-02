@@ -15,6 +15,7 @@
         <module>java-effective</module>
         <module>java-nio</module>
         <module>guava-demo</module>
+        <module>java-base</module>
     </modules>
 
     <name>java-core</name>

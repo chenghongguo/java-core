@@ -12,9 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author: chenghongguo
- * @date: 2019-06-24
- * @description:
+ * @author chenghongguo
+ * @date 2019-06-24
  */
 public class DateTest {
 
@@ -22,7 +21,7 @@ public class DateTest {
     public void test1() throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // 开放提报时间区间
-        DateObject open = new DateObject(format.parse("2019-08-06 00:00:00"), format.parse("2019-09-30 23:59:59"));
+        DateObject open = new DateObject(format.parse("2019-09-02 00:00:00"), format.parse("2019-09-06 23:59:59"));
 
         // 广告位时间区间列表合并
         List<DateObject> merge = merge(init());
@@ -49,16 +48,8 @@ public class DateTest {
     private List<DateObject> init() throws Exception {
         List<DateObject> list = Lists.newArrayList();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        list.add(new DateObject(format.parse("2019-08-07 00:00:00"), format.parse("2019-08-23 23:59:59")));
-        list.add(new DateObject(format.parse("2019-08-25 00:00:00"), format.parse("2019-10-31 23:59:59")));
-//        list.add(new DateObject(format.parse("2019-07-24 00:00:00"), format.parse("2019-07-24 23:59:59")));
-//        list.add(new DateObject(format.parse("2019-07-25 00:00:00"), format.parse("2019-07-31 23:59:59")));
-//        list.add(new DateObject(format.parse("2019-08-01 00:00:00"), format.parse("2019-08-07 23:59:59")));
-//        list.add(new DateObject(format.parse("2019-08-15 00:00:00"), format.parse("2019-08-20 23:59:59")));
-//        list.add(new DateObject(format.parse("2019-08-15 00:00:00"), format.parse("2019-08-20 23:59:59")));
-//        list.add(new DateObject(format.parse("2019-07-22"), format.parse("2019-07-25")));
-        // list.add(new DateObject(format.parse("2019-06-26"), format.parse("2019-06-26")));
-//        list.add(new DateObject(format.parse("2019-06-27"), format.parse("2019-06-27")));
+        list.add(new DateObject(format.parse("2019-09-03 00:00:00"), format.parse("2019-09-03 23:59:59")));
+        list.add(new DateObject(format.parse("2019-09-04 00:00:00"), format.parse("2019-09-04 23:59:59")));
         list.sort(Comparator.comparing(DateObject::getStartDate));
         return list;
     }
@@ -77,7 +68,9 @@ public class DateTest {
             if (open.getStartDate().getTime() < first.getStartDate().getTime()) {
                 result.add(new DateObject(open.getStartDate(), DateUtils.getEndTimeOfDay(DateUtils.plusDays(first.getStartDate(), -1))));
             }
-            result.add(new DateObject(DateUtils.getFirstTimeOfDay(DateUtils.plusDays(first.getEndDate(), 1)), DateUtils.getEndTimeOfDay(open.getEndDate())));
+            if (open.getEndDate().getTime() - first.getEndDate().getTime() > 1000) {
+                result.add(new DateObject(DateUtils.getFirstTimeOfDay(DateUtils.plusDays(first.getEndDate(), 1)), DateUtils.getEndTimeOfDay(open.getEndDate())));
+            }
         } else {
             for (int i = 1; i < list.size(); i++) {
                 DateObject next = list.get(i);
@@ -147,7 +140,7 @@ public class DateTest {
         for (int i = 1; i < list.size(); i++) {
             DateObject next = list.get(i);
             // 合并区间
-            if (next.getStartDate().getTime() - first.getEndDate().getTime() == 1000) {
+            if (next.getStartDate().getTime() < first.getEndDate().getTime() || next.getStartDate().getTime() - first.getEndDate().getTime() == 1000) {
                 first.setStartDate(new Date(Math.min(first.getStartDate().getTime(), next.getStartDate().getTime())));
                 first.setEndDate(new Date(Math.max(first.getEndDate().getTime(), next.getEndDate().getTime())));
             } else {
