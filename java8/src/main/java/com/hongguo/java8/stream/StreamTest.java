@@ -46,6 +46,13 @@ public class StreamTest {
     }
 
     @Test
+    public void test50() {
+        employees2.stream().filter(employee -> Status.BUSY.equals(employee.getStatus()))
+                .forEach(employee -> employee.setGender(3));
+        employees2.forEach(System.out::println);
+    }
+
+    @Test
     public void test49() {
         // 比较集合的forEach与stream的forEach：操作结果一致，但是集合的forEach执行效率较高
         employees.forEach(e -> {

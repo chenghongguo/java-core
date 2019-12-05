@@ -16,6 +16,7 @@
         <module>java-nio</module>
         <module>guava-demo</module>
         <module>java-base</module>
+        <module>jvm-demo</module>
     </modules>
 
     <name>java-core</name>
@@ -51,6 +52,11 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.5</version>
         </dependency>
     </dependencies>
 

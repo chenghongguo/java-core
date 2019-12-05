@@ -15,6 +15,13 @@ import java.util.Optional;
  */
 public class OptionalTest {
 
+    @Test
+    public void testUser() {
+        User user = new User();
+        user.setName("hongguo");
+        Optional.ofNullable(user).ifPresent(User::getName);
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void givenOptionalWithNull_whenGetThrowsException_thenCorrect() {
         Optional<String> opt = Optional.ofNullable(null);

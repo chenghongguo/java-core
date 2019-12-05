@@ -31,7 +31,7 @@ public class LocalDateTimeTest {
 
     @Test
     public void test4() {
-        LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        LocalDateTime of = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         System.out.println(of);
 
         Date from = Date.from(of.atZone(ZoneId.systemDefault()).toInstant());
