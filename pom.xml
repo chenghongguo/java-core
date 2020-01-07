@@ -15,7 +15,12 @@
         <module>java-effective</module>
         <module>java-nio</module>
         <module>guava-demo</module>
+<<<<<<< HEAD
         <module>java-core</module>
+=======
+        <module>java-base</module>
+        <module>jvm-demo</module>
+>>>>>>> 32b29f1813f9c1a0bbee6e52b27c16e112a9ff25
     </modules>
 
     <name>java-core</name>
@@ -51,6 +56,11 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.5</version>
         </dependency>
     </dependencies>
 

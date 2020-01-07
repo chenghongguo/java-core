@@ -18,8 +18,8 @@ public class DateUtils {
     /**
      * 获取date当天的最后时间
      *
-     * @param date
-     * @return
+     * @param date 日期
+     * @return date当天的最后时间
      */
     public static Date getEndTimeOfDay(Date date) {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
@@ -29,8 +29,8 @@ public class DateUtils {
     /**
      * 获取date当天的开始日期
      *
-     * @param date
-     * @return
+     * @param date 日期
+     * @return date当天的开始日期
      */
     public static Date getFirstTimeOfDay(Date date) {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
