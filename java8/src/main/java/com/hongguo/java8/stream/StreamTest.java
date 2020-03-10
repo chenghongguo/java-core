@@ -46,6 +46,27 @@ public class StreamTest {
     }
 
     @Test
+    public void  test52() {
+        Stream<String> stream = Arrays.asList("hello", "world", "hello world").stream();
+        stream.mapToInt(String::length).forEach(System.out::println);
+    }
+
+    @Test
+    public void test51() {
+        Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5);
+        stream.forEach(System.out::println);
+        String[] array = new String[]{"a", "b", "c"};
+        Stream<String> stream1 = Arrays.stream(array);
+        stream1.filter(s -> {
+            System.out.println("fkjdsjfdsljflkds");
+            return true;
+        }).filter(s -> {
+            System.out.println("fjdskjflds");
+            return false;
+        });
+    }
+
+    @Test
     public void test50() {
         employees2.stream().filter(employee -> Status.BUSY.equals(employee.getStatus()))
                 .forEach(employee -> employee.setGender(3));

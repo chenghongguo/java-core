@@ -3,7 +3,6 @@ package com.hongguo.java8.methodreference;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,16 +24,22 @@ public class StudentTest {
     }
 
     @Test
-    public void test3() {
-        LocalDate forbidPeriodDate = LocalDate.now().plusDays(4);
-        System.out.println(forbidPeriodDate);
+    public void testInstanceMethodRef2() {
+        StudentComparator comparator = new StudentComparator();
+        students.sort(comparator::compare);
+        students.forEach(System.out::println);
     }
 
     @Test
-    public void test2() {
-        List<String> list = new ArrayList<>();
-        list.add(null);
-        System.out.println(list);
+    public void testStaticMethodRef2() {
+        students.sort(Student::compareByName);
+        students.forEach(System.out::println);
+    }
+
+    @Test
+    public void testStaticMethodRef() {
+        students.sort(Student::compareByScore);
+        students.forEach(System.out::println);
     }
 
     @Test

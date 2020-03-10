@@ -1,5 +1,7 @@
 package com.hongguo.java8.consumer;
 
+import org.junit.Test;
+
 import java.util.function.BiConsumer;
 
 /**
@@ -13,5 +15,10 @@ public class ConsumerTest {
 
     public void test(BiConsumer<String, String> consumer) {
         consumer.accept("a", "b");
+    }
+
+    @Test
+    public void test2() {
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 }

@@ -34,6 +34,10 @@ public class Student {
         return s1.getScore() - s2.getScore();
     }
 
+    public static int compareByName(Student s1, Student s2) {
+        return s1.getName().compareToIgnoreCase(s2.getName());
+    }
+
     @Override
     public String toString() {
         return "Student{" +
