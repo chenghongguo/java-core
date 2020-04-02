@@ -46,7 +46,15 @@ public class StreamTest {
     }
 
     @Test
-    public void  test52() {
+    public void test53() {
+        List<String> list = Arrays.asList("hello", "world");
+        Stream<String> head = list.stream();
+        Stream<Integer> mapStream = head.map(String::length);
+        mapStream.forEach(System.out::println);
+    }
+
+    @Test
+    public void test52() {
         Stream<String> stream = Arrays.asList("hello", "world", "hello world").stream();
         stream.mapToInt(String::length).forEach(System.out::println);
     }
