@@ -3,6 +3,7 @@ package com.hongguo.java8.utils;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -154,5 +155,75 @@ public class DateUtils {
     public static Date plusDays(Date date, int days) {
         LocalDate localDate = convertToLocalDate(date);
         return convertLocalDateToDate(localDate.plusDays(days));
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getStartDate(0));
+        LocalDateTime now = LocalDateTime.of(LocalDate.now().minusDays(7), LocalTime.MIN);
+        System.out.println(now);
+        now = LocalDateTime.of(LocalDate.now().minusMonths(1), LocalTime.MIN);
+        System.out.println(now);
+        now = LocalDateTime.of(LocalDate.now().minusMonths(3), LocalTime.MIN);
+        System.out.println(now);
+
+        long time = convertLocalDateTimeToDate(now).getTime();
+        System.out.println(time);
+
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = now.atZone(zone).toInstant();
+        System.out.println(instant.toEpochMilli());
+
+
+        // 只保留3个月的数据
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -3);
+        long expired = c.getTime().getTime();
+        System.out.println(c.getTime());
+        System.out.println(expired);
+        now = LocalDateTime.of(LocalDate.now().minusMonths(3), LocalTime.MIN);
+    }
+
+    /**
+     * 根据课程类型获取浏览历史记录
+     *
+     * @param timeSlot 0: 全部视频，不做时间判断
+     *                 1: 1周内
+     *                 2: 1个月内
+     *                 3：3个月内
+     * @return 时间戳
+     */
+    private static long getStartDate(int timeSlot) {
+        long date = 0L;
+        Calendar c = Calendar.getInstance();
+        switch (timeSlot) {
+            case 0:
+                break;
+            case 1:
+                date = getDateBefore(c.getTime(), Calendar.DAY_OF_WEEK).getTime();
+                break;
+            case 2:
+                c.add(Calendar.MONTH, -1);
+                date = c.getTime().getTime();
+                break;
+            case 3:
+                c.add(Calendar.MONTH, -3);
+                date = c.getTime().getTime();
+                break;
+            default:
+                date = 0L;
+                break;
+        }
+        return date;
+    }
+
+    /**
+     * 获取一指定天数之前的时间
+     */
+    public static Date getDateBefore(Date d, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - day);
+        return calendar.getTime();
     }
 }

@@ -3,6 +3,7 @@ package com.hongguo.java.base;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -34,6 +35,18 @@ public class StringTest {
         person.setName(person.getName().replace("#", " "));
         return person;
     };
+
+    @Test
+    public void test2() {
+        List<String> allList = new ArrayList<>();
+        allList.add("154_4_en");
+        allList.add("154_4");
+        allList.add("154_4_zh");
+        String[] strings = allList.toArray(new String[0]);
+        for (String s : strings) {
+            System.out.println(s);
+        }
+    }
 
     @Test
     public void  test1() {

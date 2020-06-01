@@ -1,5 +1,9 @@
 package com.hongguo.java8.function;
 
+import org.openjdk.jol.info.ClassLayout;
+
+import java.util.function.Function;
+
 /**
  * @author: chenghongguo
  * @date: 2019-06-05
@@ -10,8 +14,18 @@ public class FooTest {
     private String value = "Enclosing scope value";
 
     public static void main(String[] args) {
-        FooTest test = new FooTest();
-        System.out.println(test.scope());
+        Function<Integer, Integer> function = i -> i * 2;
+        System.out.println(function.getClass());
+        String s = ClassLayout.parseInstance(function.getClass()).toPrintable();
+        System.out.println(s);
+        System.out.println("-----------------");
+
+        A a = new A();
+        System.out.println(ClassLayout.parseInstance(a).toPrintable());
+    }
+
+    static class A {
+
     }
 
     public String scope() {

@@ -1,5 +1,7 @@
 package com.hongguo.java8.function;
 
+import org.junit.Test;
+
 import java.util.function.Function;
 
 /**
@@ -34,5 +36,13 @@ public class TestFunction {
     private static int b() {
         System.out.println("b");
         return 22;
+    }
+
+    @Test
+    public void test() {
+        Integer i = 100;
+        Integer j = 1_000_000;
+        System.out.println(j.compareTo(i));
+        System.out.println(j.compareTo(i) > 0);
     }
 }
